@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Simple chat</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <p>Пользователь: <span th:text="${user.name}"> Вася</span></p>
+    </div>
+    <div class="row">
+        <form class="form-inline" method="post" action="/addchatroom">
+            <input type="text" class="form-control" hidden name="userId" th:value="${user.id}">
+            <label for="chatname" class="mr-sm-4 my-4">Задайте имя нового чата: </label>
+            <input type="text" class="form-control" id="chatname" name="chatName">
+            <button class="btn btn-info ml-sm-2" type="submit" >Создать</button>
+        </form>
+    </div>
+    <div class="row">
+        <table class="table table-bordered table-hover" id="tariffs">
+            <tbody>
+            <tr th:each="chatRoom : ${chatList}">
+                <td>
+                    <a href="chatroom.html" th:href="@{/chatroom(userId=${user.id},chatId=${chatRoom.id})}"
+                       th:text="${chatRoom.name}">ChatName</a>
+                </td>
+                <td th:if="${user == chatRoom.admin}">
+                    <form class="form-inline" method="post" action="/deletechat">
+                        <input type="text" class="form-control" hidden name="chatId" th:value="${chatRoom.id}">
+                        <button class="btn btn-info ml-sm-2" type="submit" >Удалить chat</button>
+                    </form>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

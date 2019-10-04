@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Simple chat</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <p><a href="/chatlist" th:href="@{/chatlist(userName=${user.name})}">назад к списку чатов</a> </p>
+    </div>
+    <div class="row">
+        <h5>чат: <span th:text="${chatroom.name}"> тест</span></h5>
+        <p th:text="|Пользователь: ${user.name} |"></p>
+    </div>
+    <div class="row">
+            <form method="post" action="/postmessage">
+                <label for="msgtext" class="mr-sm-4 my-4">Введите текст сообщения: </label>
+                <textarea class="form-control" rows="5" cols="80" id="msgtext" name="text"></textarea>
+                <input type="text" class="form-control" hidden name="userId" th:value="${user.id}">
+                <input type="text" class="form-control" hidden name="chatId" th:value="${chatroom.id}">
+                <button class="btn btn-info ml-sm-2" type="submit" >Отправить</button>
+            </form>
+    </div>
+    <div class="row">
+        <table class="table table-bordered table-hover" id="tariffs">
+            <tbody>
+            <tr th:each="message : ${messages}">
+                <td th:text="|<${message.author.name}> : ${message.text}|"> Автор: Вася <br> Всем привет</td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
